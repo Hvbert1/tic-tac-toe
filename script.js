@@ -12,9 +12,14 @@ const gameBoard = (() => {
         }
     }
 
+    function reset() {
+        document.getElementById("game").innerText = "";
+    }
+
     return {
         createBoard,
-        displayBoard
+        displayBoard,
+        reset
     };
 })();
 
@@ -50,6 +55,7 @@ const controller = (() => {
             board[2] == 'X' && board[4] == 'X' && board[6] == 'X'
         ) {
             alert('You win!');
+            gameBoard.reset();
             gameBoard.createBoard();
         }
 
@@ -64,11 +70,13 @@ const controller = (() => {
             board[2] == 'O' && board[4] == 'O' && board[6] == 'O'
         ) {
             alert('You lose!');
+            gameBoard.reset();
             gameBoard.createBoard();
         }
 
         else if(count == 10) {
             alert('Draw');
+            gameBoard.reset();
             gameBoard.createBoard();
         }
     }
@@ -92,7 +100,6 @@ const controller = (() => {
     }
 })();
 
-controller.winCheck();
 controller.select();
 
 
