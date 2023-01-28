@@ -22,14 +22,18 @@ gameBoard.createBoard();
 gameBoard.displayBoard();
 
 const controller = (() => {
-    function test () {
+    let count = 1;
+    let sign = "";
+
+    function select () {
         var userSelection = document.getElementsByClassName('box');
 
         for(var i = 0; i < userSelection.length; i++) {
-            userSelection[i].addEventListener('click', function(e) {
-                board[this.id] = 'X';
+            userSelection[i].addEventListener('click', function() {
+                turn();
+                board[this.id] = sign;
+                document.getElementById(this.id).innerText = sign;
                 console.log(board);
-                console.log('The id of the element you clicked: ' + this.id);
                 winCheck();
             })
         }
@@ -48,14 +52,47 @@ const controller = (() => {
             alert('You win!');
             gameBoard.createBoard();
         }
+
+        else if (
+            board[0] == 'O' && board[1] == 'O' && board[2] == 'O' ||
+            board[3] == 'O' && board[4] == 'O' && board[5] == 'O' ||
+            board[6] == 'O' && board[7] == 'O' && board[8] == 'O' ||
+            board[0] == 'O' && board[3] == 'O' && board[6] == 'O' ||
+            board[1] == 'O' && board[4] == 'O' && board[7] == 'O' ||
+            board[2] == 'O' && board[5] == 'O' && board[8] == 'O' ||
+            board[0] == 'O' && board[4] == 'O' && board[8] == 'O' ||
+            board[2] == 'O' && board[4] == 'O' && board[6] == 'O'
+        ) {
+            alert('You lose!');
+            gameBoard.createBoard();
+        }
+
+        else if(count == 10) {
+            alert('Draw');
+            gameBoard.createBoard();
+        }
+    }
+
+    function turn() {
+        if(count % 2 == 0) {
+            sign = 'X';
+        }
+
+        else {
+            sign = 'O';
+        }
+        count++;
+        console.log(count);
     }
 
     return {
         winCheck,
-        test
+        select,
+        turn
     }
 })();
 
 controller.winCheck();
-controller.test();
+controller.select();
+
 
