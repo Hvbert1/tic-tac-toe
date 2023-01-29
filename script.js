@@ -35,11 +35,14 @@ const controller = (() => {
 
         for(var i = 0; i < userSelection.length; i++) {
             userSelection[i].addEventListener('click', function() {
-                turn();
-                board[this.id] = sign;
-                document.getElementById(this.id).innerText = sign;
-                console.log(board);
-                winCheck();
+                if(board[this.id] == "") {
+                    turn();
+                    board[this.id] = sign;
+                    document.getElementById(this.id).innerText = sign;
+                    console.log(board);
+                    winCheck();
+                }
+                return;
             })
         }
     }
