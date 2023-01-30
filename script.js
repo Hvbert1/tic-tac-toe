@@ -36,9 +36,12 @@ const controller = (() => {
         for(var i = 0; i < userSelection.length; i++) {
             userSelection[i].addEventListener('click', function() {
                 if(board[this.id] == "") {
-                    turn();
-                    board[this.id] = sign;
-                    document.getElementById(this.id).innerText = sign;
+                    // turn();
+                    board[this.id] = 'X';
+                    document.getElementById(this.id).innerText = 'X';
+                    count++;
+                    console.log(count);
+                    computerSelection();
                     console.log(board);
                     winCheck();
                 }
@@ -77,32 +80,48 @@ const controller = (() => {
             gameBoard.createBoard();
         }
 
-        else if(count == 10) {
+        else if(count == 6) {
             alert('Draw');
             gameBoard.reset();
             gameBoard.createBoard();
         }
     }
 
-    function turn() {
-        if(count % 2 == 0) {
-            sign = 'X';
-        }
+    function computerSelection() {
+        randomInt = Math.floor(Math.random() * (8 - 0 + 1) + 0);
 
-        else {
-            sign = 'O';
+        if(count != 6) {
+            while (board[randomInt] != "") {
+                randomInt = Math.floor(Math.random() * (8 - 0 + 1) + 0);
+                if(board[randomInt] == "") {
+                    break;
+                }
+            }
+            console.log('true');
+            board[randomInt] = 'O';
+            document.getElementById(randomInt).innerText = 'O';
         }
-        count++;
-        console.log(count);
     }
+
+    // function turn() {
+    //     if(count % 2 == 0) {
+    //         sign = 'O';
+    //     }
+
+    //     else {
+    //         sign = 'X';
+    //     }
+    //     count++;
+    //     console.log(count);
+    // }
 
     return {
         winCheck,
         select,
-        turn
+        computerSelection,
+        // turn
     }
 })();
 
 controller.select();
-
 
