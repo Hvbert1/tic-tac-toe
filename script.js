@@ -24,10 +24,7 @@ const gameBoard = (() => {
     };
 })();
 
-gameBoard.createBoard();
-
 const controller = (() => {
-    let count = 1;
     const huPlayer = 'X';
     const aiPlayer = 'O';
 
@@ -46,8 +43,11 @@ const controller = (() => {
         if (board[cellId] === "") {
             turn(cellId, huPlayer);
 
-            if(!winCheck(board, huPlayer)) {
+            if (!winCheck(board, huPlayer)) {
                 turn(computerSelection(), aiPlayer);
+            } else {
+                gameBoard.reset();
+                gameBoard.createBoard();
             }
         }
     }
@@ -71,14 +71,10 @@ const controller = (() => {
         ) {
             win = true;
             alert('You win!');
-            gameBoard.reset();
-            gameBoard.createBoard();
         }
-        else if(count == 6) {
+        else if (emptySpots().length === 0) {
             win = true;
             alert('Draw');
-            gameBoard.reset();
-            gameBoard.createBoard();
         }
         return win;
     }
@@ -91,7 +87,7 @@ const controller = (() => {
 
     function randomNumber() {
         return Math.floor(Math.random() * 9);
-      }
+    }
 
     function computerSelection() {
         for (i = 0; i < 9; i++) {
@@ -113,4 +109,5 @@ const controller = (() => {
     }
 })();
 
+gameBoard.createBoard();
 controller.select();
