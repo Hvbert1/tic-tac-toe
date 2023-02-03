@@ -16,7 +16,7 @@ const gameBoard = (() => {
     function reset() {
         document.getElementById("game").innerText = "";
     }
-
+    
     return {
         createBoard,
         displayBoard,
@@ -34,7 +34,6 @@ const controller = (() => {
         cells.forEach(function(elem) {
             elem.addEventListener('click', function(event) {
                 playMove(event.target.id);
-                console.log(board);
             });
         });
     }
@@ -60,6 +59,8 @@ const controller = (() => {
 
     function winCheck(board, player) {
         let win = false;
+        var winner = document.querySelector("h2");
+
         if (board[0] == player && board[1] == player && board[2] == player ||
             board[3] == player && board[4] == player && board[5] == player ||
             board[6] == player && board[7] == player && board[8] == player ||
@@ -70,11 +71,11 @@ const controller = (() => {
             board[2] == player && board[4] == player && board[6] == player
         ) {
             win = true;
-            alert('You win!');
+            winner.innerText = player + " wins";
         }
         else if (emptySpots().length === 0) {
             win = true;
-            alert('Draw');
+            winner.innerText = "Draw";
         }
         return win;
     }
@@ -96,7 +97,6 @@ const controller = (() => {
                 continue;
             }
             else {
-                console.log(random);
                 return random;
             }
         }
