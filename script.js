@@ -36,17 +36,21 @@ const controller = (() => {
 
         cells.forEach(function(elem) {
             elem.addEventListener('click', function(event) {
-                console.log(event.target.id)
                 playMove(event.target.id);
+                console.log(board);
             });
         });
     }
 
     function playMove(cellId) {
-        if(board[cellId] === "") {
+        if (board[cellId] === "") {
             turn(cellId, huPlayer);
+
+            if(!winCheck(board, huPlayer)) {
+                turn(computerSelection(), aiPlayer);
             }
         }
+    }
 
     function turn(cellId, player) {
         board[cellId] = player;
@@ -55,6 +59,7 @@ const controller = (() => {
     }
 
     function winCheck(board, player) {
+        let win = false;
         if (board[0] == player && board[1] == player && board[2] == player ||
             board[3] == player && board[4] == player && board[5] == player ||
             board[6] == player && board[7] == player && board[8] == player ||
@@ -64,50 +69,47 @@ const controller = (() => {
             board[0] == player && board[4] == player && board[8] == player ||
             board[2] == player && board[4] == player && board[6] == player
         ) {
+            win = true;
             alert('You win!');
             gameBoard.reset();
             gameBoard.createBoard();
         }
         else if(count == 6) {
+            win = true;
             alert('Draw');
             gameBoard.reset();
             gameBoard.createBoard();
         }
+        return win;
     }
+
+    function emptySpots() {
+        return board.filter(function (el) {
+            return el !== "X" && el !== "O";
+        });
+    }
+
+    function randomNumber() {
+        return Math.floor(Math.random() * 9);
+      }
 
     function computerSelection() {
-        randomInt = Math.floor(Math.random() * (8 - 0 + 1) + 0);
-
-        if(count != 6) {
-            while (board[randomInt] != "") {
-                randomInt = Math.floor(Math.random() * (8 - 0 + 1) + 0);
-                if(board[randomInt] == "") {
-                    break;
-                }
+        for (i = 0; i < 9; i++) {
+            var random = randomNumber();
+            if (board[random] === "X" || board[random] === "O") {
+                continue;
             }
-            console.log('true');
-            board[randomInt] = 'O';
-            document.getElementById(randomInt).innerText = 'O';
+            else {
+                console.log(random);
+                return random;
+            }
         }
     }
-
-    // function turn() {
-    //     if(count % 2 == 0) {
-    //         sign = 'O';
-    //     }
-
-    //     else {
-    //         sign = 'X';
-    //     }
-    //     count++;
-    //     console.log(count);
-    // }
 
     return {
         winCheck,
         select,
         computerSelection,
-        // turn
     }
 })();
 
