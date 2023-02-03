@@ -1,6 +1,7 @@
 const gameBoard = (() => {
     function createBoard () {
         board = ["", "", "", "", "", "", "", "", ""];
+        displayBoard();
     }
 
     function displayBoard () {
@@ -24,30 +25,32 @@ const gameBoard = (() => {
 })();
 
 gameBoard.createBoard();
-gameBoard.displayBoard();
 
 const controller = (() => {
     let count = 1;
-    let sign = "";
+    const huPlayer = 'X';
+    const aiPlayer = 'O';
 
     function select () {
-        var userSelection = document.getElementsByClassName('box');
+        var cells = document.querySelectorAll('div.box');
 
-        for(var i = 0; i < userSelection.length; i++) {
-            userSelection[i].addEventListener('click', function() {
-                if(board[this.id] == "") {
-                    // turn();
-                    board[this.id] = 'X';
-                    document.getElementById(this.id).innerText = 'X';
-                    count++;
-                    console.log(count);
-                    computerSelection();
-                    console.log(board);
-                    winCheck();
-                }
-                return;
-            })
+        cells.forEach(function(elem) {
+            elem.addEventListener('click', function(event) {
+                console.log(event.target.id)
+                playMove(event.target.id);
+            });
+        });
+    }
+
+    function playMove(cellId) {
+        if(board[cellId] === "") {
+            turn(cellId, huPlayer);
+            }
         }
+
+    function turn(cellId, player) {
+        board[cellId] = player;
+        document.getElementById(cellId).innerText = player;
     }
 
     function winCheck() {
@@ -124,4 +127,3 @@ const controller = (() => {
 })();
 
 controller.select();
-
