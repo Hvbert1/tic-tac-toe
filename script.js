@@ -15,6 +15,9 @@ const gameBoard = (() => {
 
     function reset() {
         document.getElementById("game").innerText = "";
+        createBoard();
+        controller.select();
+        document.querySelector("h2").innerText = "Click to retry!";
     }
     
     return {
@@ -46,7 +49,6 @@ const controller = (() => {
                 turn(computerSelection(), aiPlayer);
             } else {
                 gameBoard.reset();
-                gameBoard.createBoard();
             }
         }
     }
@@ -58,7 +60,6 @@ const controller = (() => {
     }
 
     function winCheck(board, player) {
-        let win = false;
         var winner = document.querySelector("h2");
 
         if (board[0] == player && board[1] == player && board[2] == player ||
@@ -70,14 +71,14 @@ const controller = (() => {
             board[0] == player && board[4] == player && board[8] == player ||
             board[2] == player && board[4] == player && board[6] == player
         ) {
-            win = true;
             winner.innerText = player + " wins";
+            return true;
         }
         else if (emptySpots().length === 0) {
-            win = true;
             winner.innerText = "Draw";
+            return true;
         }
-        return win;
+        return false;
     }
 
     function emptySpots() {
@@ -91,7 +92,7 @@ const controller = (() => {
     }
 
     function computerSelection() {
-        for (i = 0; i < 9; i++) {
+        for (i = 0; i < 25; i++) {
             var random = randomNumber();
             if (board[random] === "X" || board[random] === "O") {
                 continue;
