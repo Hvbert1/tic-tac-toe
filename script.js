@@ -2,6 +2,7 @@ const gameBoard = (() => {
     function createBoard () {
         board = ["", "", "", "", "", "", "", "", ""];
         displayBoard();
+        reset();
     }
 
     function displayBoard () {
@@ -14,10 +15,13 @@ const gameBoard = (() => {
     }
 
     function reset() {
-        document.getElementById("game").innerText = "";
-        createBoard();
-        controller.select();
-        document.querySelector("h2").innerText = "Click to retry!";
+        var button = document.getElementById("reset");
+
+        button.addEventListener('click', function() {
+            document.getElementById("game").innerText = "";
+            createBoard();
+            controller.select();
+        });
     }
     
     return {
@@ -42,7 +46,7 @@ const controller = (() => {
     }
 
     function playMove(cellId) {
-        if (board[cellId] === "") {
+        if (board[cellId] === "" && !winCheck(board, huPlayer) && !winCheck(board, aiPlayer)) {
             turn(cellId, huPlayer);
 
             if (!winCheck(board, huPlayer)) {
