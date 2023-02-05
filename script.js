@@ -19,6 +19,9 @@ const gameBoard = (() => {
 
         button.addEventListener('click', function() {
             document.getElementById("game").innerText = "";
+            document.querySelector("h2").innerText = "Click a grid to start";
+            document.querySelector("h2").style.color = "#A38D96";
+            button.style.backgroundColor = "#E7E0E4";
             createBoard();
             controller.select();
         });
@@ -76,6 +79,8 @@ const controller = (() => {
             board[2] == player && board[4] == player && board[6] == player
         ) {
             winner.innerText = player + " wins";
+            winner.style.color = "#F4D018";
+            document.querySelector("button").style.backgroundColor="#F4D018";
             return true;
         }
         else if (emptySpots().length === 0) {
