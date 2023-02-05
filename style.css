@@ -34,3 +34,13 @@ h2 {
     font-size: 4rem;
 }
 
+button {
+    background-color: #E7E0E4;
+    border: none;
+    color: #463F49;
+    padding: 12px 30px;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: .3rem;
+}
+
