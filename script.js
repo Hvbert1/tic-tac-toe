@@ -2,7 +2,6 @@ const gameBoard = (() => {
     function createBoard () {
         board = ["", "", "", "", "", "", "", "", ""];
         displayBoard();
-        reset();
     }
 
     function displayBoard () {
